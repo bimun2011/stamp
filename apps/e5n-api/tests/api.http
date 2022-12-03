@@ -1,0 +1,14 @@
+###
+POST http://localhost:3000/upload
+Content-Type: application/json
+
+{
+  "pecset": "samu",
+  "megadottJelszo": "tes21231t",
+  "helyesJelszo": "ahah",
+  "elfogadva": "false"
+}
+
+
+###
+GET http://localhost:3000/getall
