@@ -15,6 +15,7 @@ import {
   Text,
   useToast,
   Heading,
+  Input,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import SupvizComp from "../components/supviz";
@@ -31,7 +32,7 @@ import Link from "next/link";
 
 function Index() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const toast = useToast();
+  const toast = useToast({ variant: "subtle" });
   const [isGetDataRun, setIsGetDataRun] = useState(false);
 
   const [Supviz, setSupviz] = useState(false);
@@ -93,13 +94,6 @@ function Index() {
   }
 
   function checkPassword() {
-    axios.post(process.env.NEXT_PUBLIC_SERVER_URL + "/upload", {
-      pecset: ModalType,
-      megadottJelszo: ModalPasswordInput,
-      helyesJelszo: ModalPassword,
-      ervenyes: ModalPassword === ModalPasswordInput,
-    });
-
     if (ModalPasswordInput === ModalPassword) {
       switch (ModalType) {
         case "kavezo":
@@ -262,20 +256,19 @@ function Index() {
       <BGOverlay />
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent rounded="3xl">
           <ModalHeader>{ModalTitle}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <p>
-              <strong>Leírás:</strong> {ModalBodyText}
-            </p>
+            <p>{ModalBodyText}</p>
             {ModalType === "host" ? (
               <></>
             ) : (
-              <input
+              <Input
                 type="text"
-                className="modal-password-input"
                 placeholder="Standjelszó"
+                rounded={"full"}
+                mt={2}
                 value={ModalPasswordInput}
                 onChange={(e) => setModalPasswordInput(e.target.value)}
               />
@@ -283,17 +276,26 @@ function Index() {
           </ModalBody>
 
           <ModalFooter>
-            <Button onClick={closeModal} variant="ghost" mr={3}>
+            <Button
+              onClick={closeModal}
+              variant="ghost"
+              mr={3}
+              rounded={"full"}
+            >
               Mégse
             </Button>
             {ModalType === "host" ? (
               <Link href="/host">
-                <Button mt={2} mb={2}>
+                <Button mt={2} mb={2} rounded={"full"}>
                   Kérdőív megnyitása
                 </Button>
               </Link>
             ) : (
-              <Button colorScheme="whatsapp" onClick={checkPassword}>
+              <Button
+                colorScheme="whatsapp"
+                onClick={checkPassword}
+                rounded={"full"}
+              >
                 Pecsét hozzáadása
               </Button>
             )}
@@ -317,7 +319,7 @@ function Index() {
         ></Image>
       </Flex>
       <Box width={"100vw"} bgColor={"rgb(23, 27, 38)"} color={"white"}>
-        <Heading align={"center"}>E5N pecsétgyűjtögetés</Heading>
+        <Heading align={"center"}>Eötvös Napok - Pecsétgyűjtés</Heading>
         {Supviz &&
         Host &&
         Staff &&
@@ -330,17 +332,20 @@ function Index() {
             align={"center"}
             bgColor="blue.900"
             margin={2}
+            marginY={10}
             rounded={10}
             textColor="white"
             padding={2}
           >
-            <Text>
-              <strong>Megszerezted az összes pecsétet! Gratulálok!</strong>
-            </Text>
+            <Heading fontSize={"xl"}>
+              Megszerezted az összes pecsétet! Gratulálok!
+            </Heading>
             <Text>Menj a BIMUN Kávézóba, hogy megkapd a jutalmadat!</Text>
             <Button
               onClick={() => openModal("kavezo")}
               colorScheme={"green"}
+              rounded={"full"}
+              px={10}
               mt={2}
             >
               Ajándék beváltása
@@ -433,7 +438,7 @@ function Index() {
         color={"white"}
       >
         <Text align={"center"}>
-          <strong>Minden jog fenntartva © 2022 BIMUN</strong>
+          <strong>Minden jog fenntartva © 2023 BIMUN</strong>
         </Text>
       </Flex>
     </>
