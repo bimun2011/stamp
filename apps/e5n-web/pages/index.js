@@ -179,7 +179,7 @@ function Index() {
       case "supviz":
         setModalTitle("Supervisor stand");
         setModalBodyText(
-          "Szeretsz hirtelen helyzeteket megoldani? Fel tudod ismerni, miről készült a kép? Ha igen, akkor ez a stand neked való! Próbáld ki magad a Supervisor standon!"
+          "Fő a talpraesettség! Nézz be a Supviz standhoz es próbáld ki magad különböző érdekes szituációkban és karakterekben!"
         );
         setModalPassword(process.env.NEXT_PUBLIC_SUPVIZ_PASS);
         setModalType("supviz");
@@ -188,7 +188,7 @@ function Index() {
       case "staff":
         setModalTitle("Staff stand");
         setModalBodyText(
-          "Látogass el a Staff standhoz és próbáld ki, milyen egy igazi staff napja. A rövid akadálypályán vicces és változatos feladatokban lesz részed és a pecsét is a tiéd lesz."
+          "Lépj közelebb, állj meg egy pillanatra, a staff standjánál vár egy vicces kihivás ma. Elhagyott kabátok sorsa rejtekezik itt,  most keresd meg őket, ne hagyd őket itt!"
         );
         setModalPassword(process.env.NEXT_PUBLIC_STAFF_PASS);
         setModalType("staff");
@@ -197,7 +197,7 @@ function Index() {
       case "host":
         setModalTitle("Host stand");
         setModalBodyText(
-          "Nézd meg a Host standot és derítsd ki, melyik delegált illene bele legjobban a te életedbe. Válaszolj a kérdésekre és rögtön kiderül. Természetesen a pecsétet is megkapod!"
+          "Kíváncsi vagy, hogy milyen feladatai vannak egy host-nak? Szeretsz új embereket megismerni? Esetleg angol nyelvtudásodat szeretnéd fejleszteni? Akkor nézz el a standunkhoz, és tudj meg többet a hostolás varázsáról!"
         );
         setModalPassword(process.env.NEXT_PUBLIC_HOST_PASS);
         setModalType("host");
@@ -206,7 +206,7 @@ function Index() {
       case "press":
         setModalTitle("Press stand");
         setModalBodyText(
-          "Gyertek el a Pressesekhez megismerni milyen is a sajtóban dolgozni! Tesztelhetitek tudásotokat az újságírásról és társasozhattok is velünk csapatban a barátaitokkal vagy szólóban is!"
+          "Gyere el a Press standhoz, hogy betekintést nyerj abba, hogy milyen egy konferencián újságírónak lenni! Izgalmas tudáspróbán és játékokban vehetsz részt szólóban vagy barátokkal!"
         );
         setModalPassword(process.env.NEXT_PUBLIC_PRESS_PASS);
         setModalType("press");
@@ -215,7 +215,7 @@ function Index() {
       case "media":
         setModalTitle("Media stand");
         setModalBodyText(
-          "Ugorj el a Media standhoz és találd meg a hibákat régi BIMUN képeinken."
+          "Csatlakozz hozzánk egy játék erejéig! Nekünk fotosoknak a konferencia dokumentálása a feladatunk. Vetettünk pár hibát a képek szerkesztésekkor. Segíts nekünk, keresd meg ezeket, hogy kijavíthassuk."
         );
         setModalPassword(process.env.NEXT_PUBLIC_MEDIA_PASS);
         setModalType("media");
@@ -261,18 +261,14 @@ function Index() {
           <ModalCloseButton />
           <ModalBody>
             <p>{ModalBodyText}</p>
-            {ModalType === "host" ? (
-              <></>
-            ) : (
-              <Input
-                type="text"
-                placeholder="Standjelszó"
-                rounded={"full"}
-                mt={2}
-                value={ModalPasswordInput}
-                onChange={(e) => setModalPasswordInput(e.target.value)}
-              />
-            )}
+            <Input
+              type="text"
+              placeholder="Standjelszó"
+              rounded={"full"}
+              mt={2}
+              value={ModalPasswordInput}
+              onChange={(e) => setModalPasswordInput(e.target.value)}
+            />
           </ModalBody>
 
           <ModalFooter>
@@ -284,21 +280,13 @@ function Index() {
             >
               Mégse
             </Button>
-            {ModalType === "host" ? (
-              <Link href="/host">
-                <Button mt={2} mb={2} rounded={"full"}>
-                  Kérdőív megnyitása
-                </Button>
-              </Link>
-            ) : (
-              <Button
-                colorScheme="whatsapp"
-                onClick={checkPassword}
-                rounded={"full"}
-              >
-                Pecsét hozzáadása
-              </Button>
-            )}
+            <Button
+              colorScheme="whatsapp"
+              onClick={checkPassword}
+              rounded={"full"}
+            >
+              Pecsét hozzáadása
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
@@ -309,6 +297,7 @@ function Index() {
         bgGradient={"linear(to-b, rgb(20, 21, 67), rgb(23, 27, 38))"}
         justify={"center"}
         align={"center"}
+        border={"none"}
       >
         <Image
           width={163 * 0.7}
@@ -318,16 +307,14 @@ function Index() {
           alt={"BIMUN Logo"}
         ></Image>
       </Flex>
-      <Box width={"100vw"} bgColor={"rgb(23, 27, 38)"} color={"white"}>
+      <Box
+        width={"100vw"}
+        bgColor={"rgb(23, 27, 38)"}
+        color={"white"}
+        minH={"80vh"}
+      >
         <Heading align={"center"}>Eötvös Napok - Pecsétgyűjtés</Heading>
-        {Supviz &&
-        Host &&
-        Staff &&
-        Press &&
-        Media &&
-        Creative &&
-        SocMed &&
-        Sponsor ? (
+        {Host && Staff && Press && Media && Supviz ? (
           <Box
             align={"center"}
             bgColor="blue.900"
@@ -355,13 +342,7 @@ function Index() {
           <></>
         )}
         <Flex wrap={"wrap"} justify={"space-around"} rowGap={"6"} mt={"4"}>
-          <Box
-            align={"center"}
-            w={"40%"}
-            onClick={() => {
-              openModal("supviz");
-            }}
-          >
+          <Box align={"center"} w={"40%"} onClick={() => openModal("supviz")}>
             <SupvizComp isActive={Supviz}></SupvizComp>
           </Box>
           <Box
@@ -399,33 +380,6 @@ function Index() {
             }}
           >
             <MediaComp isActive={Media}></MediaComp>
-          </Box>
-          <Box
-            align={"center"}
-            w={"40%"}
-            onClick={() => {
-              openModal("creative");
-            }}
-          >
-            <CreativeComp isActive={Creative}></CreativeComp>
-          </Box>
-          <Box
-            align={"center"}
-            w={"40%"}
-            onClick={() => {
-              openModal("socmed");
-            }}
-          >
-            <SocMedComp isActive={SocMed}></SocMedComp>
-          </Box>
-          <Box
-            align={"center"}
-            w={"40%"}
-            onClick={() => {
-              openModal("sponsor");
-            }}
-          >
-            <SponsorComp isActive={Sponsor}></SponsorComp>
           </Box>
         </Flex>
       </Box>
