@@ -23,6 +23,7 @@ import HostComp from "../components/host";
 import StaffComp from "../components/staff";
 import PressComp from "../components/press";
 import MediaComp from "../components/media";
+import ProfComp from "../components/prof";
 import SponsorComp from "../components/sponsor";
 import SocMedComp from "../components/socmed";
 import CreativeComp from "../components/creative";
@@ -43,6 +44,7 @@ function Index() {
   const [Creative, setCreative] = useState(false);
   const [Sponsor, setSponsor] = useState(false);
   const [SocMed, setSocMed] = useState(false);
+  const [Prof, setProf] = useState(false);
 
   const [ModalTitle, setModalTitle] = useState("");
   const [ModalBodyText, setModalBodyText] = useState("");
@@ -64,13 +66,14 @@ function Index() {
       creative: Creative,
       sponsor: Sponsor,
       socmed: SocMed,
+      prof: Prof,
     };
-    localStorage.setItem("pecsetek", JSON.stringify(pecsetek));
+    localStorage.setItem("pecsetek-bimunday", JSON.stringify(pecsetek));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Supviz, Host, Staff, Press, Media, Creative, Sponsor, SocMed]);
 
   useEffect(() => {
-    const pecsetek = JSON.parse(localStorage.getItem("pecsetek"));
+    const pecsetek = JSON.parse(localStorage.getItem("pecsetek-bimunday"));
     if (pecsetek) {
       setSupviz(pecsetek.supviz);
       setHost(pecsetek.host);
@@ -80,6 +83,7 @@ function Index() {
       setCreative(pecsetek.creative);
       setSponsor(pecsetek.sponsor);
       setSocMed(pecsetek.socmed);
+      setProf(pecsetek.prof);
     }
     setIsGetDataRun(true);
   }, []);
@@ -94,7 +98,7 @@ function Index() {
   }
 
   function checkPassword() {
-    if (ModalPasswordInput === ModalPassword) {
+    if (ModalPasswordInput.toLowerCase() === ModalPassword.toLowerCase()) {
       switch (ModalType) {
         case "kavezo":
           setSupviz(false);
@@ -105,6 +109,7 @@ function Index() {
           setCreative(false);
           setSponsor(false);
           setSocMed(false);
+          setProf(false);
           break;
         case "supviz":
           setSupviz(!Supviz);
@@ -129,6 +134,9 @@ function Index() {
           break;
         case "socmed":
           setSocMed(!SocMed);
+          break;
+        case "prof":
+          setProf(!Prof);
           break;
       }
 
@@ -248,6 +256,15 @@ function Index() {
         setModalType("socmed");
         onOpen();
         break;
+      case "prof":
+        setModalTitle("Professional stand");
+        setModalBodyText(
+          "Gyere és próbáld ki magad egy igazi diplomáciai tárgyaláson!"
+        );
+        setModalPassword(process.env.NEXT_PUBLIC_PROF_PASS);
+        setModalType("prof");
+        onOpen();
+        break;
     }
   }
 
@@ -313,8 +330,8 @@ function Index() {
         color={"white"}
         minH={"80vh"}
       >
-        <Heading align={"center"}>Eötvös Napok - Pecsétgyűjtés</Heading>
-        {Host && Staff && Press && Media && Supviz ? (
+        <Heading align={"center"}>BIMUN DAY - Pecsétgyűjtés</Heading>
+        {Host && Staff && Press && Media && Supviz && Prof ? (
           <Box
             align={"center"}
             bgColor="blue.900"
@@ -380,6 +397,15 @@ function Index() {
             }}
           >
             <MediaComp isActive={Media}></MediaComp>
+          </Box>
+          <Box
+            align={"center"}
+            w={"40%"}
+            onClick={() => {
+              openModal("prof");
+            }}
+          >
+            <ProfComp isActive={Prof}></ProfComp>
           </Box>
         </Flex>
       </Box>
