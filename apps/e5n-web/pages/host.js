@@ -116,12 +116,15 @@ export default function Host() {
         ></Image>
       </Flex>
       <Box width={"100vw"} bgColor={"white"} color={"black"}>
-        <Heading align={"center"}>HOST - Ki illik legjobban hozzád?</Heading>
-        <Box m={5} p={5} rounded={15} bgColor={"rgba(256,256,256,0.15)"}>
+        <Heading align={"center"}>
+          Melyik delegált illik legjobban hozzád?
+        </Heading>
+        <Box p={5} rounded={15} bgColor={"rgba(256,256,256,0.15)"}>
           <Heading size={"lg"} pb={2}>
             Mivel ütöd el az időt legszívesebben egy péntek estén?
           </Heading>
           <Select
+            rounded={"full"}
             value={one}
             onChange={(e) => setOne(parseInt(e.target.value))}
           >
@@ -134,11 +137,12 @@ export default function Host() {
             <option value={4}>Pihenek a családommal</option>
           </Select>
         </Box>
-        <Box m={5} p={5} rounded={15} bgColor={"rgba(256,256,256,0.15)"}>
+        <Box p={5} rounded={15} bgColor={"rgba(256,256,256,0.15)"}>
           <Heading size={"lg"} pb={2}>
             Mit csinálsz átlagosan a hétvégén?
           </Heading>
           <Select
+            rounded={"full"}
             value={two}
             onChange={(e) => setTwo(parseInt(e.target.value))}
           >
@@ -150,11 +154,12 @@ export default function Host() {
             </option>
           </Select>
         </Box>
-        <Box m={5} p={5} rounded={15} bgColor={"rgba(256,256,256,0.15)"}>
+        <Box p={5} rounded={15} bgColor={"rgba(256,256,256,0.15)"}>
           <Heading size={"lg"} pb={2}>
             Melyik országot látogatnád meg a legszívesebben?
           </Heading>
           <Select
+            rounded={"full"}
             value={three}
             onChange={(e) => setThree(parseInt(e.target.value))}
           >
@@ -164,11 +169,12 @@ export default function Host() {
             <option value={4}>Törökország</option>
           </Select>
         </Box>
-        <Box m={5} p={5} rounded={15} bgColor={"rgba(256,256,256,0.15)"}>
+        <Box p={5} rounded={15} bgColor={"rgba(256,256,256,0.15)"}>
           <Heading size={"lg"} pb={2}>
             Véleményed szerint melyik a legjobb kiegészítő?
           </Heading>
           <Select
+            rounded={"full"}
             value={four}
             onChange={(e) => setFour(parseInt(e.target.value))}
           >
@@ -178,12 +184,13 @@ export default function Host() {
             <option value={4}>Fülbevaló</option>
           </Select>
         </Box>
-        <Box m={5} p={5} rounded={15} bgColor={"rgba(256,256,256,0.15)"}>
+        <Box p={5} rounded={15} bgColor={"rgba(256,256,256,0.15)"}>
           <Heading size={"lg"} pb={2}>
             Amikor este indulsz haza, átlagosan hányra érsz biztonságos
             otthonodba?
           </Heading>
           <Select
+            rounded={"full"}
             value={five}
             onChange={(e) => setFive(parseInt(e.target.value))}
           >
@@ -193,22 +200,29 @@ export default function Host() {
             <option value={1}>21 körül</option>
           </Select>
         </Box>
-        <Box m={5} p={5} rounded={15} bgColor={"rgba(256,256,256,0.15)"}>
+        <Box p={5} rounded={15} bgColor={"rgba(256,256,256,0.15)"}>
           <Heading size={"lg"} pb={2}>
             Ha valamit süthetnél a delegáltadnak, mi lenne az?
           </Heading>
           <Select
+            rounded={"full"}
             value={six}
             onChange={(e) => setSix(parseInt(e.target.value))}
           >
             <option value={1}>Gulyásleves</option>
-            <option value={2}>Palacsinta</option>
             <option value={3}>Paprikás krumpli</option>
             <option value={4}>Nem sütnék, túró rudit adnék</option>
+            <option value={2}>Palacsinta</option>
           </Select>
         </Box>
         <Flex justify={"center"} pb={16}>
-          <Button onClick={onOpen} colorScheme={"green"}>
+          <Button
+            onClick={onOpen}
+            colorScheme={"green"}
+            w={"full"}
+            mx={5}
+            rounded={"full"}
+          >
             Beküldés
           </Button>
         </Flex>

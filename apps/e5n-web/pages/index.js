@@ -186,7 +186,7 @@ function Index() {
       case "supviz":
         setModalTitle("Supervisor stand");
         setModalBodyText(
-          "Fő a talpraesettség! Nézz be a Supviz standhoz es próbáld ki magad különböző érdekes szituációkban és karakterekben!"
+          "Supervisorként mindig készen kell állni a különböző problémák megoldására. Ennél a standnál letesztelhetitek talpraesettségeteket és problémamegoldó képességeteket. Válaszoljatok helyesen a kérdésekre és tartsatok életben minden delegáltat, sok sikert!"
         );
         setModalPassword(process.env.NEXT_PUBLIC_SUPVIZ_PASS);
         setModalType("supviz");
@@ -195,7 +195,7 @@ function Index() {
       case "staff":
         setModalTitle("Staff stand");
         setModalBodyText(
-          "Lépj közelebb, állj meg egy pillanatra, a staff standjánál vár egy vicces kihivás ma. Elhagyott kabátok sorsa rejtekezik itt,  most keresd meg őket, ne hagyd őket itt!"
+          "Pörgess a szerencsekeréken és játssz izgalmas, szórakoztató játékokkal, amelyek bemutatják a BIMUN jellegét, illetve a staffok feladatát."
         );
         setModalPassword(process.env.NEXT_PUBLIC_STAFF_PASS);
         setModalType("staff");
@@ -213,7 +213,7 @@ function Index() {
       case "press":
         setModalTitle("Press stand");
         setModalBodyText(
-          "Gyere el a Press standhoz, hogy betekintést nyerj abba, hogy milyen egy konferencián újságírónak lenni! Izgalmas tudáspróbán és játékokban vehetsz részt szólóban vagy barátokkal!"
+          "Részt vennél az Eötvös legnagyobb rendezvényén, a BIMUN-on? Érdekel az újságírás? Tudd meg, milyen egy nemzetközi konferencia részesének lenni, és játssz a barátaiddal a Press standnál!"
         );
         setModalPassword(process.env.NEXT_PUBLIC_PRESS_PASS);
         setModalType("press");
@@ -222,7 +222,7 @@ function Index() {
       case "media":
         setModalTitle("Media stand");
         setModalBodyText(
-          "Csatlakozz hozzánk egy játék erejéig! Nekünk fotosoknak a konferencia dokumentálása a feladatunk. Vetettünk pár hibát a képek szerkesztésekkor. Segíts nekünk, keresd meg ezeket, hogy kijavíthassuk."
+          "Pár kezdő médiás rosszul szerkesztette meg képeit. Rátok vár a feladat, hogy segítsetek nekik, és ki javítsátok ezeket a hibákat. Gyertek, játszatok velünk! Ez egy remek lehetősèg, hogy betekintést nyerjetek a munkánkba. Várunk titeket szeretettel!"
         );
         setModalPassword(process.env.NEXT_PUBLIC_MEDIA_PASS);
         setModalType("media");
@@ -258,7 +258,7 @@ function Index() {
       case "prof":
         setModalTitle("Professional stand");
         setModalBodyText(
-          "Gyere és próbáld ki magad egy igazi diplomáciai tárgyaláson!"
+          "Te tudod mi az Egyesült Államok legfőbb jellegzetességei? És Kínáé? Ha olvastok különböző cikkeket adott országokról, láthatjátok, hogy mindegyiknek van néhány jellegzetes vonása. De mennyire ismered ezeket?Látogass el a Prof Teamhez a szünetekben, ahol egy izgalmas párosítós feladatban kipróbálhatod a tudásodat az országok közti kapcsolatokról és azok jellegzetességeiről. Ha részt szeretnél venni szakmailag BIMUN-on, érdekel a politika és a nemzetközi kapcsolatok, akkor jelentkezz bátran rapporteurnak és nézz be a Prof teamhez a szünetben!:)"
         );
         setModalPassword(process.env.NEXT_PUBLIC_PROF_PASS);
         setModalType("prof");
@@ -271,7 +271,7 @@ function Index() {
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent rounded="3xl">
+        <ModalContent rounded="2xl">
           <ModalHeader>{ModalTitle}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -293,7 +293,7 @@ function Index() {
           <ModalFooter>
             <Button
               onClick={closeModal}
-              variant="ghost"
+              variant="outline"
               mr={3}
               rounded={"full"}
             >
@@ -341,22 +341,23 @@ function Index() {
         {Host && Staff && Press && Media && Supviz && Prof ? (
           <Box
             align={"center"}
-            bgColor="blue.900"
+            border={"1px solid "}
+            borderColor={"gray.500"}
             margin={2}
-            marginY={10}
-            rounded={10}
-            textColor="white"
+            marginY={5}
+            rounded={"3xl"}
+            textColor="black"
             padding={2}
           >
             <Heading fontSize={"xl"}>
-              Megszerezted az összes pecsétet! Gratulálok!
+              Megszerezted az összes pecsétet! Gratulálunk!
             </Heading>
             <Text>Menj a BIMUN Kávézóba, hogy megkapd a jutalmadat!</Text>
             <Button
               onClick={() => openModal("kavezo")}
               colorScheme={"green"}
               rounded={"full"}
-              px={10}
+              w={"full"}
               mt={2}
             >
               Ajándék beváltása
@@ -425,6 +426,7 @@ function Index() {
         justify={"center"}
         align={"center"}
         color={"black"}
+        mt={5}
       >
         <Text align={"center"}>
           <strong>Minden jog fenntartva © 2023 BIMUN</strong>
