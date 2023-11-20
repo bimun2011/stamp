@@ -28,7 +28,6 @@ import SponsorComp from "../components/sponsor";
 import SocMedComp from "../components/socmed";
 import CreativeComp from "../components/creative";
 
-import BGOverlay from "../components/bg-overlay";
 import Link from "next/link";
 
 function Index() {
@@ -270,7 +269,6 @@ function Index() {
 
   return (
     <>
-      <BGOverlay />
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent rounded="3xl">
@@ -278,14 +276,18 @@ function Index() {
           <ModalCloseButton />
           <ModalBody>
             <p>{ModalBodyText}</p>
-            <Input
-              type="text"
-              placeholder="Standjelszó"
-              rounded={"full"}
-              mt={2}
-              value={ModalPasswordInput}
-              onChange={(e) => setModalPasswordInput(e.target.value)}
-            />
+            {ModalType === "host" ? (
+              <></>
+            ) : (
+              <Input
+                type="text"
+                placeholder="Standjelszó"
+                rounded={"full"}
+                mt={2}
+                value={ModalPasswordInput}
+                onChange={(e) => setModalPasswordInput(e.target.value)}
+              />
+            )}
           </ModalBody>
 
           <ModalFooter>
@@ -297,13 +299,21 @@ function Index() {
             >
               Mégse
             </Button>
-            <Button
-              colorScheme="whatsapp"
-              onClick={checkPassword}
-              rounded={"full"}
-            >
-              Pecsét hozzáadása
-            </Button>
+            {ModalType === "host" ? (
+              <Link href="/host">
+                <Button mt={2} mb={2} rounded={"full"}>
+                  Kérdőív megnyitása
+                </Button>
+              </Link>
+            ) : (
+              <Button
+                colorScheme="whatsapp"
+                onClick={checkPassword}
+                rounded={"full"}
+              >
+                Pecsét hozzáadása
+              </Button>
+            )}
           </ModalFooter>
         </ModalContent>
       </Modal>
@@ -311,7 +321,9 @@ function Index() {
       <Flex
         w={"100vw"}
         h={"10vh"}
-        bgGradient={"linear(to-b, rgb(20, 21, 67), rgb(23, 27, 38))"}
+        bgGradient={
+          "linear(to-b, transparent, white), linear-gradient(90deg, hsla(196, 100%, 47%, 1) 0%, hsla(324, 100%, 47%, 1) 25%, hsla(101, 52%, 52%, 1) 50%, hsla(52, 98%, 50%, 1) 75%, hsla(357, 86%, 52%, 1) 100%)"
+        }
         justify={"center"}
         align={"center"}
         border={"none"}
@@ -324,12 +336,7 @@ function Index() {
           alt={"BIMUN Logo"}
         ></Image>
       </Flex>
-      <Box
-        width={"100vw"}
-        bgColor={"rgb(23, 27, 38)"}
-        color={"white"}
-        minH={"80vh"}
-      >
+      <Box width={"100vw"} bgColor={"white"} color={"black"} minH={"80vh"}>
         <Heading align={"center"}>BIMUN DAY - Pecsétgyűjtés</Heading>
         {Host && Staff && Press && Media && Supviz && Prof ? (
           <Box
@@ -412,10 +419,12 @@ function Index() {
       <Flex
         w={"100vw"}
         h={"10vh"}
-        bgGradient={"linear(to-t, rgb(20, 21, 67), rgb(23, 27, 38))"}
+        bgGradient={
+          "linear(to-t, transparent, white), linear-gradient(90deg, hsla(196, 100%, 47%, 1) 0%, hsla(324, 100%, 47%, 1) 25%, hsla(101, 52%, 52%, 1) 50%, hsla(52, 98%, 50%, 1) 75%, hsla(357, 86%, 52%, 1) 100%)"
+        }
         justify={"center"}
         align={"center"}
-        color={"white"}
+        color={"black"}
       >
         <Text align={"center"}>
           <strong>Minden jog fenntartva © 2023 BIMUN</strong>
