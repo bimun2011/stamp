@@ -23,11 +23,11 @@ import HostComp from "../components/host";
 import StaffComp from "../components/staff";
 import PressComp from "../components/press";
 import MediaComp from "../components/media";
+import ProfComp from "../components/prof";
 import SponsorComp from "../components/sponsor";
 import SocMedComp from "../components/socmed";
 import CreativeComp from "../components/creative";
 
-import BGOverlay from "../components/bg-overlay";
 import Link from "next/link";
 
 function Index() {
@@ -43,6 +43,7 @@ function Index() {
   const [Creative, setCreative] = useState(false);
   const [Sponsor, setSponsor] = useState(false);
   const [SocMed, setSocMed] = useState(false);
+  const [Prof, setProf] = useState(false);
 
   const [ModalTitle, setModalTitle] = useState("");
   const [ModalBodyText, setModalBodyText] = useState("");
@@ -64,13 +65,14 @@ function Index() {
       creative: Creative,
       sponsor: Sponsor,
       socmed: SocMed,
+      prof: Prof,
     };
-    localStorage.setItem("pecsetek", JSON.stringify(pecsetek));
+    localStorage.setItem("pecsetek-bimunday", JSON.stringify(pecsetek));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Supviz, Host, Staff, Press, Media, Creative, Sponsor, SocMed]);
 
   useEffect(() => {
-    const pecsetek = JSON.parse(localStorage.getItem("pecsetek"));
+    const pecsetek = JSON.parse(localStorage.getItem("pecsetek-bimunday"));
     if (pecsetek) {
       setSupviz(pecsetek.supviz);
       setHost(pecsetek.host);
@@ -80,6 +82,7 @@ function Index() {
       setCreative(pecsetek.creative);
       setSponsor(pecsetek.sponsor);
       setSocMed(pecsetek.socmed);
+      setProf(pecsetek.prof);
     }
     setIsGetDataRun(true);
   }, []);
@@ -94,7 +97,7 @@ function Index() {
   }
 
   function checkPassword() {
-    if (ModalPasswordInput === ModalPassword) {
+    if (ModalPasswordInput.toLowerCase() === ModalPassword.toLowerCase()) {
       switch (ModalType) {
         case "kavezo":
           setSupviz(false);
@@ -105,6 +108,7 @@ function Index() {
           setCreative(false);
           setSponsor(false);
           setSocMed(false);
+          setProf(false);
           break;
         case "supviz":
           setSupviz(!Supviz);
@@ -129,6 +133,9 @@ function Index() {
           break;
         case "socmed":
           setSocMed(!SocMed);
+          break;
+        case "prof":
+          setProf(!Prof);
           break;
       }
 
@@ -179,7 +186,7 @@ function Index() {
       case "supviz":
         setModalTitle("Supervisor stand");
         setModalBodyText(
-          "Fő a talpraesettség! Nézz be a Supviz standhoz es próbáld ki magad különböző érdekes szituációkban és karakterekben!"
+          "Supervisorként mindig készen kell állni a különböző problémák megoldására. Ennél a standnál letesztelhetitek talpraesettségeteket és problémamegoldó képességeteket. Válaszoljatok helyesen a kérdésekre és tartsatok életben minden delegáltat, sok sikert!"
         );
         setModalPassword(process.env.NEXT_PUBLIC_SUPVIZ_PASS);
         setModalType("supviz");
@@ -188,7 +195,7 @@ function Index() {
       case "staff":
         setModalTitle("Staff stand");
         setModalBodyText(
-          "Lépj közelebb, állj meg egy pillanatra, a staff standjánál vár egy vicces kihivás ma. Elhagyott kabátok sorsa rejtekezik itt,  most keresd meg őket, ne hagyd őket itt!"
+          "Pörgess a szerencsekeréken és játssz izgalmas, szórakoztató játékokkal, amelyek bemutatják a BIMUN jellegét, illetve a staffok feladatát."
         );
         setModalPassword(process.env.NEXT_PUBLIC_STAFF_PASS);
         setModalType("staff");
@@ -206,7 +213,7 @@ function Index() {
       case "press":
         setModalTitle("Press stand");
         setModalBodyText(
-          "Gyere el a Press standhoz, hogy betekintést nyerj abba, hogy milyen egy konferencián újságírónak lenni! Izgalmas tudáspróbán és játékokban vehetsz részt szólóban vagy barátokkal!"
+          "Részt vennél az Eötvös legnagyobb rendezvényén, a BIMUN-on? Érdekel az újságírás? Tudd meg, milyen egy nemzetközi konferencia részesének lenni, és játssz a barátaiddal a Press standnál!"
         );
         setModalPassword(process.env.NEXT_PUBLIC_PRESS_PASS);
         setModalType("press");
@@ -215,7 +222,7 @@ function Index() {
       case "media":
         setModalTitle("Media stand");
         setModalBodyText(
-          "Csatlakozz hozzánk egy játék erejéig! Nekünk fotosoknak a konferencia dokumentálása a feladatunk. Vetettünk pár hibát a képek szerkesztésekkor. Segíts nekünk, keresd meg ezeket, hogy kijavíthassuk."
+          "Pár kezdő médiás rosszul szerkesztette meg képeit. Rátok vár a feladat, hogy segítsetek nekik, és ki javítsátok ezeket a hibákat. Gyertek, játszatok velünk! Ez egy remek lehetősèg, hogy betekintést nyerjetek a munkánkba. Várunk titeket szeretettel!"
         );
         setModalPassword(process.env.NEXT_PUBLIC_MEDIA_PASS);
         setModalType("media");
@@ -248,45 +255,65 @@ function Index() {
         setModalType("socmed");
         onOpen();
         break;
+      case "prof":
+        setModalTitle("Professional stand");
+        setModalBodyText(
+          "Te tudod mi az Egyesült Államok legfőbb jellegzetességei? És Kínáé? Ha olvastok különböző cikkeket adott országokról, láthatjátok, hogy mindegyiknek van néhány jellegzetes vonása. De mennyire ismered ezeket?Látogass el a Prof Teamhez a szünetekben, ahol egy izgalmas párosítós feladatban kipróbálhatod a tudásodat az országok közti kapcsolatokról és azok jellegzetességeiről. Ha részt szeretnél venni szakmailag BIMUN-on, érdekel a politika és a nemzetközi kapcsolatok, akkor jelentkezz bátran rapporteurnak és nézz be a Prof teamhez a szünetben!:)"
+        );
+        setModalPassword(process.env.NEXT_PUBLIC_PROF_PASS);
+        setModalType("prof");
+        onOpen();
+        break;
     }
   }
 
   return (
     <>
-      <BGOverlay />
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent rounded="3xl">
+        <ModalContent rounded="2xl">
           <ModalHeader>{ModalTitle}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <p>{ModalBodyText}</p>
-            <Input
-              type="text"
-              placeholder="Standjelszó"
-              rounded={"full"}
-              mt={2}
-              value={ModalPasswordInput}
-              onChange={(e) => setModalPasswordInput(e.target.value)}
-            />
+            {ModalType === "host" ? (
+              <></>
+            ) : (
+              <Input
+                type="text"
+                placeholder="Standjelszó"
+                rounded={"full"}
+                mt={2}
+                value={ModalPasswordInput}
+                onChange={(e) => setModalPasswordInput(e.target.value)}
+              />
+            )}
           </ModalBody>
 
           <ModalFooter>
             <Button
               onClick={closeModal}
-              variant="ghost"
+              variant="outline"
               mr={3}
               rounded={"full"}
             >
               Mégse
             </Button>
-            <Button
-              colorScheme="whatsapp"
-              onClick={checkPassword}
-              rounded={"full"}
-            >
-              Pecsét hozzáadása
-            </Button>
+            {ModalType === "host" ? (
+              <Link href="/host">
+                <Button mt={2} mb={2} rounded={"full"}>
+                  Kérdőív megnyitása
+                </Button>
+              </Link>
+            ) : (
+              <Button
+                colorScheme="whatsapp"
+                onClick={checkPassword}
+                rounded={"full"}
+              >
+                Pecsét hozzáadása
+              </Button>
+            )}
           </ModalFooter>
         </ModalContent>
       </Modal>
@@ -294,7 +321,9 @@ function Index() {
       <Flex
         w={"100vw"}
         h={"10vh"}
-        bgGradient={"linear(to-b, rgb(20, 21, 67), rgb(23, 27, 38))"}
+        bgGradient={
+          "linear(to-b, transparent, white), linear-gradient(90deg, hsla(196, 100%, 47%, 1) 0%, hsla(324, 100%, 47%, 1) 25%, hsla(101, 52%, 52%, 1) 50%, hsla(52, 98%, 50%, 1) 75%, hsla(357, 86%, 52%, 1) 100%)"
+        }
         justify={"center"}
         align={"center"}
         border={"none"}
@@ -307,32 +336,28 @@ function Index() {
           alt={"BIMUN Logo"}
         ></Image>
       </Flex>
-      <Box
-        width={"100vw"}
-        bgColor={"rgb(23, 27, 38)"}
-        color={"white"}
-        minH={"80vh"}
-      >
-        <Heading align={"center"}>Eötvös Napok - Pecsétgyűjtés</Heading>
-        {Host && Staff && Press && Media && Supviz ? (
+      <Box width={"100vw"} bgColor={"white"} color={"black"} minH={"80vh"}>
+        <Heading align={"center"}>BIMUN DAY - Pecsétgyűjtés</Heading>
+        {Host && Staff && Press && Media && Supviz && Prof ? (
           <Box
             align={"center"}
-            bgColor="blue.900"
+            border={"1px solid "}
+            borderColor={"gray.500"}
             margin={2}
-            marginY={10}
-            rounded={10}
-            textColor="white"
+            marginY={5}
+            rounded={"3xl"}
+            textColor="black"
             padding={2}
           >
             <Heading fontSize={"xl"}>
-              Megszerezted az összes pecsétet! Gratulálok!
+              Megszerezted az összes pecsétet! Gratulálunk!
             </Heading>
             <Text>Menj a BIMUN Kávézóba, hogy megkapd a jutalmadat!</Text>
             <Button
               onClick={() => openModal("kavezo")}
               colorScheme={"green"}
               rounded={"full"}
-              px={10}
+              w={"full"}
               mt={2}
             >
               Ajándék beváltása
@@ -381,15 +406,27 @@ function Index() {
           >
             <MediaComp isActive={Media}></MediaComp>
           </Box>
+          <Box
+            align={"center"}
+            w={"40%"}
+            onClick={() => {
+              openModal("prof");
+            }}
+          >
+            <ProfComp isActive={Prof}></ProfComp>
+          </Box>
         </Flex>
       </Box>
       <Flex
         w={"100vw"}
         h={"10vh"}
-        bgGradient={"linear(to-t, rgb(20, 21, 67), rgb(23, 27, 38))"}
+        bgGradient={
+          "linear(to-t, transparent, white), linear-gradient(90deg, hsla(196, 100%, 47%, 1) 0%, hsla(324, 100%, 47%, 1) 25%, hsla(101, 52%, 52%, 1) 50%, hsla(52, 98%, 50%, 1) 75%, hsla(357, 86%, 52%, 1) 100%)"
+        }
         justify={"center"}
         align={"center"}
-        color={"white"}
+        color={"black"}
+        mt={5}
       >
         <Text align={"center"}>
           <strong>Minden jog fenntartva © 2023 BIMUN</strong>
