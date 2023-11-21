@@ -32,7 +32,7 @@ export default function Host() {
     let pecsetek = localStorage.getItem("pecsetek-bimunday");
     if (pecsetek == undefined) {
       localStorage.setItem(
-        "pecsetek",
+        "pecsetek-bimunday",
         JSON.stringify({
           supviz: false,
           host: true,
