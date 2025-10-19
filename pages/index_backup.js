@@ -175,7 +175,7 @@ function Index() {
   function openModal(stand) {
     switch (stand) {
       case "kavezo":
-        setModalTitle("Gofri");
+        setModalTitle("Kávézó");
         setModalBodyText(
           "Sikeresen megszerezted az összes pecsétet! Menj a kávézóba és mutasd be nekünk a pecséteket, hogy megkapd a jutalmadat!"
         );
@@ -195,7 +195,7 @@ function Index() {
       case "staff":
         setModalTitle("Staff stand");
         setModalBodyText(
-          "Vajon milyen feladatai lehetnek egy staffnak? Gyere és tudd meg nálunk! Játssz velünk, és ismerd meg a staffolás rejtelmeit!"
+          "Pörgess a szerencsekeréken és játssz izgalmas, szórakoztató játékokkal, amelyek bemutatják a BIMUN jellegét, illetve a staffok feladatát."
         );
         setModalPassword(process.env.NEXT_PUBLIC_STAFF_PASS);
         setModalType("staff");
@@ -222,7 +222,7 @@ function Index() {
       case "media":
         setModalTitle("Media stand");
         setModalBodyText(
-          "Szívesen fotózol? Tényleg? Akkor neked szól a média standja, gyere és ismerd meg, hogyan lehetsz a csapatunk tagja!"
+          "Pár kezdő médiás rosszul szerkesztette meg képeit. Rátok vár a feladat, hogy segítsetek nekik, és ki javítsátok ezeket a hibákat. Gyertek, játszatok velünk! Ez egy remek lehetősèg, hogy betekintést nyerjetek a munkánkba. Várunk titeket szeretettel!"
         );
         setModalPassword(process.env.NEXT_PUBLIC_MEDIA_PASS);
         setModalType("media");
@@ -269,243 +269,171 @@ function Index() {
 
   return (
     <>
-      {/* Liquid blobs for background effect */}
-      <div className="liquid-blob" style={{
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        width: '400px',
-        height: '400px',
-        top: '10%',
-        left: '5%',
-      }}></div>
-      <div className="liquid-blob" style={{
-        background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-        width: '300px',
-        height: '300px',
-        top: '60%',
-        right: '10%',
-        animationDelay: '-5s'
-      }}></div>
-      <div className="liquid-blob" style={{
-        background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-        width: '350px',
-        height: '350px',
-        bottom: '10%',
-        left: '50%',
-        animationDelay: '-10s'
-      }}></div>
-
       <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay backdropFilter="blur(10px)" bg="rgba(0, 0, 0, 0.4)" />
-        <ModalContent rounded="3xl" className="modal-glass" border="2px solid rgba(255, 255, 255, 0.3)">
-          <ModalHeader className="gradient-text" fontSize="2xl" fontWeight="bold">{ModalTitle}</ModalHeader>
-          <ModalCloseButton rounded="full" _hover={{ bg: 'rgba(255, 255, 255, 0.3)' }} />
-          <ModalBody pb={6}>
-            <Text color="gray.700" fontSize="md">{ModalBodyText}</Text>
+        <ModalOverlay />
+        <ModalContent rounded="2xl">
+          <ModalHeader>{ModalTitle}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <p>{ModalBodyText}</p>
+            {ModalType === "host" ? (
+              <></>
+            ) : (
               <Input
                 type="text"
                 placeholder="Standjelszó"
                 rounded={"full"}
-                mt={4}
+                mt={2}
                 value={ModalPasswordInput}
                 onChange={(e) => setModalPasswordInput(e.target.value)}
-                bg="rgba(255, 255, 255, 0.7)"
-                border="2px solid"
-                borderColor="purple.300"
-                _hover={{ borderColor: 'purple.400', bg: 'rgba(255, 255, 255, 0.85)' }}
-                _focus={{ borderColor: 'purple.500', bg: 'white', boxShadow: '0 0 0 3px rgba(159, 122, 234, 0.2)' }}
-                fontSize="md"
-                py={6}
               />
+            )}
           </ModalBody>
 
-          <ModalFooter gap={3}>
+          <ModalFooter>
             <Button
               onClick={closeModal}
               variant="outline"
+              mr={3}
               rounded={"full"}
-              px={6}
-              py={6}
-              borderWidth="2px"
-              borderColor="gray.400"
-              color="gray.700"
-              _hover={{ bg: 'rgba(255, 255, 255, 0.5)', borderColor: 'gray.500', transform: 'translateY(-2px)' }}
-              transition="all 0.3s"
             >
               Mégse
             </Button>
+            {ModalType === "host" ? (
+              <Link href="/host">
+                <Button mt={2} mb={2} rounded={"full"}>
+                  Kérdőív megnyitása
+                </Button>
+              </Link>
+            ) : (
               <Button
+                colorScheme="whatsapp"
                 onClick={checkPassword}
                 rounded={"full"}
-                px={6}
-                py={6}
-                bgGradient="linear(to-r, green.400, teal.400)"
-                color="white"
-                _hover={{ bgGradient: 'linear(to-r, green.500, teal.500)', transform: 'translateY(-2px)' }}
-                transition="all 0.3s"
-                boxShadow="0 4px 15px rgba(72, 187, 120, 0.4)"
               >
                 Pecsét hozzáadása
               </Button>
+            )}
           </ModalFooter>
         </ModalContent>
       </Modal>
 
-      <Box position="relative" zIndex={2}>
-        <Flex
-          w={"100vw"}
-          h={"12vh"}
-          className="glass-strong shimmer"
-          justify={"center"}
-          align={"center"}
-          borderBottom={"2px solid rgba(255, 255, 255, 0.3)"}
-          boxShadow="0 4px 30px rgba(0, 0, 0, 0.1)"
-        >
-          <Image
-            width={163 * 0.8}
-            height={50 * 0.8}
-            style={{ filter: 'drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2))' }}
-            src={"https://www.bimun.hu/build/assets/bimun_logo_navbar-Djv8gmmW.png"}
-            alt={"BIMUN Logo"}
-          ></Image>
-        </Flex>
-
-        <Box width={"100vw"} minH={"80vh"} py={8}>
-          <Heading
+      <Flex
+        w={"100vw"}
+        h={"10vh"}
+        bgGradient={
+          "linear(to-b, transparent, white), linear-gradient(90deg, hsla(196, 100%, 47%, 1) 0%, hsla(324, 100%, 47%, 1) 25%, hsla(101, 52%, 52%, 1) 50%, hsla(52, 98%, 50%, 1) 75%, hsla(357, 86%, 52%, 1) 100%)"
+        }
+        justify={"center"}
+        align={"center"}
+        border={"none"}
+      >
+        <Image
+          width={163 * 0.7}
+          height={50 * 0.7}
+          fit={"cover"}
+          src={"https://www.bimun.hu/build/assets/bimun_logo_navbar-Djv8gmmW.png"}
+          alt={"BIMUN Logo"}
+        ></Image>
+      </Flex>
+      <Box width={"100vw"} bgColor={"white"} color={"black"} minH={"80vh"}>
+        <Heading align={"center"}>BIMUN DAY - Pecsétgyűjtés</Heading>
+        {Host && Staff && Press && Media && Supviz && Prof ? (
+          <Box
             align={"center"}
-            className="gradient-text"
-            fontSize={{ base: "3xl", md: "4xl" }}
-            fontWeight="extrabold"
-            mb={6}
-            textShadow="0 2px 10px rgba(0, 0, 0, 0.1)"
+            border={"1px solid "}
+            borderColor={"gray.500"}
+            margin={2}
+            marginY={5}
+            rounded={"3xl"}
+            textColor="black"
+            padding={2}
           >
-            Eötvös Napok - Pecsétgyűjtés
-          </Heading>
-
-          {Host && Staff && Press && Media && Supviz ? (
-            <Box
-              className="glass-strong shimmer"
-              align={"center"}
-              mx={4}
-              my={6}
-              rounded={"3xl"}
-              p={6}
-              border="2px solid rgba(255, 255, 255, 0.4)"
-              boxShadow="0 8px 32px rgba(31, 38, 135, 0.2)"
+            <Heading fontSize={"xl"}>
+              Megszerezted az összes pecsétet! Gratulálunk!
+            </Heading>
+            <Text>Menj a BIMUN Kávézóba, hogy megkapd a jutalmadat!</Text>
+            <Button
+              onClick={() => openModal("kavezo")}
+              colorScheme={"green"}
+              rounded={"full"}
+              w={"full"}
+              mt={2}
             >
-              <Heading fontSize={"2xl"} className="gradient-text" mb={3}>
-                Megszerezted az összes pecsétet! Gratulálunk!
-              </Heading>
-              <Text color="gray.700" fontSize="lg" fontWeight="medium">
-                Jutalomként szerezz egy gofrit!
-              </Text>
-              <Button
-                onClick={() => openModal("kavezo")}
-                rounded={"full"}
-                w={"full"}
-                mt={4}
-                py={7}
-                bgGradient="linear(to-r, green.400, emerald.500, teal.500)"
-                fontSize="lg"
-                fontWeight="bold"
-                _hover={{
-                  bgGradient: 'linear(to-r, green.500, emerald.600, teal.600)',
-                  transform: 'translateY(-3px)',
-                  boxShadow: '0 8px 30px rgba(72, 187, 120, 0.5)'
-                }}
-                transition="all 0.3s"
-                boxShadow="0 4px 20px rgba(72, 187, 120, 0.4)"
-              >
-                🎁 Ajándék beváltása
-              </Button>
-            </Box>
-          ) : (
-            <></>
-          )}
-
-          <Flex
-            wrap={"wrap"}
-            justify={"space-around"}
-            rowGap={"8"}
-            columnGap={"4"}
-            mt={"6"}
-            px={4}
+              Ajándék beváltása
+            </Button>
+          </Box>
+        ) : (
+          <></>
+        )}
+        <Flex wrap={"wrap"} justify={"space-around"} rowGap={"6"} mt={"4"}>
+          <Box align={"center"} w={"40%"} onClick={() => openModal("supviz")}>
+            <SupvizComp isActive={Supviz}></SupvizComp>
+          </Box>
+          <Box
+            align={"center"}
+            w={"40%"}
+            onClick={() => {
+              openModal("host");
+            }}
           >
-            <Box
-              className="glass-card stamp-glow"
-              align={"center"}
-              w={{ base: "45%", md: "30%", lg: "20%" }}
-              onClick={() => openModal("supviz")}
-              cursor="pointer"
-              rounded="2xl"
-              p={4}
-            >
-              <SupvizComp isActive={Supviz}></SupvizComp>
-            </Box>
-            <Box
-              className="glass-card stamp-glow"
-              align={"center"}
-              w={{ base: "45%", md: "30%", lg: "20%" }}
-              onClick={() => openModal("host")}
-              cursor="pointer"
-              rounded="2xl"
-              p={4}
-            >
-              <HostComp isActive={Host}></HostComp>
-            </Box>
-            <Box
-              className="glass-card stamp-glow"
-              align={"center"}
-              w={{ base: "45%", md: "30%", lg: "20%" }}
-              onClick={() => openModal("staff")}
-              cursor="pointer"
-              rounded="2xl"
-              p={4}
-            >
-              <StaffComp isActive={Staff}></StaffComp>
-            </Box>
-            <Box
-              className="glass-card stamp-glow"
-              align={"center"}
-              w={{ base: "45%", md: "30%", lg: "20%" }}
-              onClick={() => openModal("press")}
-              cursor="pointer"
-              rounded="2xl"
-              p={4}
-            >
-              <PressComp isActive={Press}></PressComp>
-            </Box>
-            <Box
-              className="glass-card stamp-glow"
-              align={"center"}
-              w={{ base: "45%", md: "30%", lg: "20%" }}
-              onClick={() => openModal("media")}
-              cursor="pointer"
-              rounded="2xl"
-              p={4}
-            >
-              <MediaComp isActive={Media}></MediaComp>
-            </Box>
-          </Flex>
-        </Box>
-
-        <Flex
-          w={"100vw"}
-          h={"12vh"}
-          className="glass-strong"
-          justify={"center"}
-          align={"center"}
-          mt={8}
-          borderTop="2px solid rgba(255, 255, 255, 0.3)"
-          boxShadow="0 -4px 30px rgba(0, 0, 0, 0.1)"
-        >
-          <Text align={"center"} color="gray.700" fontWeight="semibold" fontSize="sm">
-            <strong>Minden jog fenntartva © 2025 BIMUN</strong>
-          </Text>
+            <HostComp isActive={Host}></HostComp>
+          </Box>
+          <Box
+            align={"center"}
+            w={"40%"}
+            onClick={() => {
+              openModal("staff");
+            }}
+          >
+            <StaffComp isActive={Staff}></StaffComp>
+          </Box>
+          <Box
+            align={"center"}
+            w={"40%"}
+            onClick={() => {
+              openModal("press");
+            }}
+          >
+            <PressComp isActive={Press}></PressComp>
+          </Box>
+          <Box
+            align={"center"}
+            w={"40%"}
+            onClick={() => {
+              openModal("media");
+            }}
+          >
+            <MediaComp isActive={Media}></MediaComp>
+          </Box>
+          <Box
+            align={"center"}
+            w={"40%"}
+            onClick={() => {
+              openModal("prof");
+            }}
+          >
+            <ProfComp isActive={Prof}></ProfComp>
+          </Box>
         </Flex>
       </Box>
+      <Flex
+        w={"100vw"}
+        h={"10vh"}
+        bgGradient={
+          "linear(to-t, transparent, white), linear-gradient(90deg, hsla(196, 100%, 47%, 1) 0%, hsla(324, 100%, 47%, 1) 25%, hsla(101, 52%, 52%, 1) 50%, hsla(52, 98%, 50%, 1) 75%, hsla(357, 86%, 52%, 1) 100%)"
+        }
+        justify={"center"}
+        align={"center"}
+        color={"black"}
+        mt={5}
+      >
+        <Text align={"center"}>
+          <strong>Minden jog fenntartva © 2023 BIMUN</strong>
+        </Text>
+      </Flex>
     </>
   );
 }
 
 export default Index;
-

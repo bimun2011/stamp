@@ -2,15 +2,195 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    @apply bg-gradient-to-br from-purple-400 via-pink-300 to-blue-400;
+    min-height: 100vh;
+    background-attachment: fixed;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+      radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3), transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(255, 119, 180, 0.3), transparent 50%),
+      radial-gradient(circle at 40% 90%, rgba(138, 180, 248, 0.3), transparent 50%);
+    pointer-events: none;
+    animation: float 15s ease-in-out infinite;
+    z-index: 0;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-20px) scale(1.05);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3),
+                0 0 40px rgba(138, 180, 248, 0.2),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.5),
+                0 0 60px rgba(138, 180, 248, 0.4),
+                inset 0 0 30px rgba(255, 255, 255, 0.2);
+  }
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2),
+              inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2),
+              0 4px 16px 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 12px 48px 0 rgba(31, 38, 135, 0.3),
+              0 8px 24px 0 rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.glass-card:active {
+  transform: translateY(-2px) scale(1.01);
+}
+
+.liquid-blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.5;
+  animation: blob 20s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes blob {
+  0%, 100% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1) rotate(120deg);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9) rotate(240deg);
+  }
+}
+
+.stamp-glow {
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+}
+
+.stamp-glow:hover {
+  filter: drop-shadow(0 0 20px rgba(138, 180, 248, 0.8))
+          drop-shadow(0 0 30px rgba(255, 119, 180, 0.5));
+  transform: scale(1.05) rotate(5deg);
+}
+
+.stamp-active {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.modal-glass {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 16px 64px 0 rgba(31, 38, 135, 0.25),
+              inset 0 2px 0 0 rgba(255, 255, 255, 0.8);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: shimmer 3s infinite;
+}
+
 .modal-password-input {
   width: 100%;
   height: 100%;
-  border: 1px solid rgb(152, 152, 152);
+  border: 2px solid rgba(138, 180, 248, 0.4);
   font-size: 1rem;
   font-weight: 500;
-  color: #000;
-  background-color: #fff;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
+  color: #1a202c;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 9999px;
+  padding: 0.75rem 1rem;
   margin-top: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.modal-password-input:focus {
+  outline: none;
+  border-color: rgba(138, 180, 248, 0.8);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 20px rgba(138, 180, 248, 0.3),
+              0 0 0 3px rgba(138, 180, 248, 0.1);
 }
